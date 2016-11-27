@@ -322,7 +322,7 @@ http {
             {{ end }}
         }
 
-        error_page 502 503 @kuberdock50x;
+        error_page 503 @kuberdock50x;
         location @kuberdock50x {
             root /usr/share/nginx/html;
             rewrite ^ /kuberdock50x.html break;
