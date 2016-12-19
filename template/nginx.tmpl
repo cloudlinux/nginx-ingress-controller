@@ -118,6 +118,11 @@ http {
         text             text/plain;
     }
 
+    map $httpAccept $ext {
+        default          html;
+        json             application/json;
+    }
+
     server_name_in_redirect off;
     port_in_redirect off;
 
@@ -322,10 +327,14 @@ http {
             {{ end }}
         }
 
-        error_page 503 @kuberdock50x;
-        location @kuberdock50x {
-            root /usr/share/nginx/html;
-            rewrite ^ /kuberdock50x.html break;
+        location /static/ {
+            root /html;
+        }
+
+        error_page 503 @kuberdock503;
+        location @kuberdock503 {
+            root /html;
+            rewrite ^ /503.$ext break;
         }
     }
 }
