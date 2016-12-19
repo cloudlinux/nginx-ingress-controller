@@ -118,9 +118,9 @@ http {
         text             text/plain;
     }
 
-    map $httpAccept $ext {
-        default          html;
-        json             application/json;
+    map $http_accept $rtype {
+        default "html";
+        ~application/json "json";
     }
 
     server_name_in_redirect off;
@@ -334,7 +334,7 @@ http {
         error_page 503 @kuberdock503;
         location @kuberdock503 {
             root /html;
-            rewrite ^ /503.$ext break;
+            rewrite ^ /503.$rtype break;
         }
     }
 }
